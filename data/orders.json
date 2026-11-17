@@ -1,0 +1,182 @@
+{
+  "note": "Fictional orders for the Saffron & Thread demo. No real people or addresses.",
+  "as_of": "2026-11-14T11:30:00",
+  "orders": [
+    {
+      "id": "ST-10482",
+      "customer": "Priya Sharma",
+      "email": "priya.s@example.com",
+      "city": "Pune",
+      "placed_at": "2026-11-08T19:42:00",
+      "status": "shipped",
+      "shipped_on": "2026-11-10",
+      "delivered_on": null,
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88213456",
+      "payment": "UPI",
+      "items": [
+        {
+          "sku": "SNT-BD-114",
+          "name": "Indigo Dabu king bedsheet",
+          "qty": 1,
+          "price": 3450,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 0,
+      "total": 3450
+    },
+    {
+      "id": "ST-10377",
+      "customer": "Ananya Iyer",
+      "email": "ananya.iyer@example.com",
+      "city": "Chennai",
+      "placed_at": "2026-10-29T10:05:00",
+      "status": "delivered",
+      "shipped_on": "2026-10-30",
+      "delivered_on": "2026-11-04",
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88199021",
+      "payment": "Card",
+      "items": [
+        {
+          "sku": "SNT-CC-031",
+          "name": "Raw silk cushion cover",
+          "qty": 2,
+          "price": 600,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 99,
+      "total": 1299
+    },
+    {
+      "id": "ST-10290",
+      "customer": "Rohan Mehta",
+      "email": "rohan.mehta@example.com",
+      "city": "Delhi",
+      "placed_at": "2026-11-03T21:15:00",
+      "status": "delivered",
+      "shipped_on": "2026-11-05",
+      "delivered_on": "2026-11-11",
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88207730",
+      "payment": "Card",
+      "items": [
+        {
+          "sku": "SNT-BD-114",
+          "name": "Indigo Dabu king bedsheet",
+          "qty": 1,
+          "price": 3450,
+          "final_sale": false
+        },
+        {
+          "sku": "SNT-TL-019",
+          "name": "Kantha table runner",
+          "qty": 1,
+          "price": 1350,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 0,
+      "total": 4800
+    },
+    {
+      "id": "ST-10155",
+      "customer": "Kavita Nair",
+      "email": "kavita.nair@example.com",
+      "city": "Kochi",
+      "placed_at": "2026-10-22T16:40:00",
+      "status": "shipped",
+      "shipped_on": "2026-10-24",
+      "delivered_on": null,
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88170544",
+      "payment": "UPI",
+      "items": [
+        {
+          "sku": "SNT-CR-220",
+          "name": "Block-print cotton curtains (pair)",
+          "qty": 2,
+          "price": 2900,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 0,
+      "total": 5800
+    },
+    {
+      "id": "ST-10511",
+      "customer": "Arjun Rao",
+      "email": "arjun.rao@example.com",
+      "city": "Bengaluru",
+      "placed_at": "2026-11-05T13:20:00",
+      "status": "delivered",
+      "shipped_on": "2026-11-06",
+      "delivered_on": "2026-11-09",
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88210012",
+      "payment": "Card",
+      "items": [
+        {
+          "sku": "SNT-RG-502",
+          "name": "Hand-braided jute rug",
+          "qty": 1,
+          "price": 2200,
+          "final_sale": true
+        }
+      ],
+      "shipping_fee": 0,
+      "total": 2200
+    },
+    {
+      "id": "ST-10560",
+      "customer": "Meera Joshi",
+      "email": "meera.joshi@example.com",
+      "city": "Mumbai",
+      "placed_at": "2026-11-14T09:10:00",
+      "status": "processing",
+      "shipped_on": null,
+      "delivered_on": null,
+      "courier": null,
+      "tracking": null,
+      "payment": "UPI",
+      "items": [
+        {
+          "sku": "SNT-TL-019",
+          "name": "Kantha table runner",
+          "qty": 1,
+          "price": 1350,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 99,
+      "total": 1449
+    },
+    {
+      "id": "ST-10433",
+      "customer": "Sameer Khan",
+      "email": "sameer.khan@example.com",
+      "city": "Lucknow",
+      "placed_at": "2026-11-10T08:55:00",
+      "status": "shipped",
+      "shipped_on": "2026-11-12",
+      "delivered_on": null,
+      "courier": "ShipFast Express (demo courier)",
+      "tracking": "SFX-88215873",
+      "payment": "COD",
+      "items": [
+        {
+          "sku": "SNT-CR-220",
+          "name": "Block-print cotton curtains (pair)",
+          "qty": 1,
+          "price": 2900,
+          "final_sale": false
+        }
+      ],
+      "shipping_fee": 0,
+      "total": 2949,
+      "cod_fee": 49
+    }
+  ]
+}
