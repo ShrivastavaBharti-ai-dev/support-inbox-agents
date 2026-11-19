@@ -7,6 +7,7 @@ agents use Gemini.
 """
 from __future__ import annotations
 
+import datetime
 import os
 import uuid
 from pathlib import Path
@@ -17,6 +18,10 @@ from inboxpilot import InboxPilot, OrderBook, PolicyIndex, load_emails, make_bra
 
 ROOT = Path(__file__).resolve().parent
 MAX_RUNS_PER_SESSION = 8   # keeps the public demo inside Gemini's free tier
+# A global safety cap shared by every visitor (on top of the per-session limit),
+# so a public demo can't run the owner's API key past a daily budget. Override
+# with the MAX_LLM_CALLS_PER_DAY environment variable.
+MAX_LLM_CALLS_PER_DAY = int(os.getenv("MAX_LLM_CALLS_PER_DAY", "200"))
 CONTRA_URL = "https://contra.com/bharti_shrivastava_zu3hypce"
 STATUS_ICON = {"sent": "✅", "needs_approval": "⏳", "archived": "🗑️", "rejected": "✋", None: "✉️"}
 STATUS_TEXT = {"sent": "Sent automatically", "needs_approval": "Waiting for your approval",
@@ -38,6 +43,30 @@ def setting(name: str) -> str | None:
 @st.cache_resource(show_spinner=False)
 def get_brain(api_key: str | None):
     return make_brain(api_key)
+
+
+@st.cache_resource(show_spinner=False)
+def _daily_usage() -> dict:
+    """One counter shared by all sessions in this server process."""
+    return {"date": datetime.date.today(), "calls": 0}
+
+
+def _roll_day(usage: dict) -> None:
+    today = datetime.date.today()
+    if usage["date"] != today:
+        usage["date"], usage["calls"] = today, 0
+
+
+def day_calls_left() -> int:
+    usage = _daily_usage()
+    _roll_day(usage)
+    return MAX_LLM_CALLS_PER_DAY - usage["calls"]
+
+
+def record_call() -> None:
+    usage = _daily_usage()
+    _roll_day(usage)
+    usage["calls"] += 1
 
 
 @st.cache_resource(show_spinner=False)
@@ -88,6 +117,8 @@ def main() -> None:
                 "automatically. Anything involving money, an upset customer or legal risk waits for your approval.")
     st.caption("Demo shop: *Saffron & Thread*, a fictional handloom store. All customers, orders and emails are made up. "
                "Nothing is really emailed.")
+    st.caption("⏳ On the free demo server, the very first run can take up to a minute while it wakes up — "
+               "after that it's quick.")
 
     statuses = [t["status"] for t in state.tickets.values()]
     auto_sent = sum(1 for t in state.tickets.values() if t["status"] == "sent" and not t["state"].get("decision"))
@@ -150,6 +181,11 @@ def main() -> None:
                 st.warning(f"This demo processes {MAX_RUNS_PER_SESSION} emails per visit to stay within its free "
                            "API limit. Refresh the page later, or run it yourself with your own key.")
                 return
+            if brain.live and day_calls_left() <= 0:
+                st.warning("This public demo has paused for today after reaching its daily limit, which keeps "
+                           "it inside its free API budget. Please try again tomorrow, or run it yourself with "
+                           "your own key.")
+                return
             if st.button("Run the agent team", type="primary", key=f"run-{selected}"):
                 try:
                     with st.spinner("The agents are working on it…"):
@@ -159,6 +195,7 @@ def main() -> None:
                              if is_rate_limit(error) else f"Something went wrong ({type(error).__name__}).")
                     return
                 if brain.live:
+                    record_call()
                     state.runs += 1
                 state.tickets[selected] = {"thread_id": result.thread_id, "status": result.status,
                                            "state": result.state, "pending": result.pending}
